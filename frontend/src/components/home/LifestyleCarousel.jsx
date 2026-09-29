@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import img1 from '../../assets/carsouselimg1.jpg'
 import img2 from '../../assets/carsouselimg2.jpg'
 import img3 from '../../assets/carsouselimg3.jpg'
@@ -6,10 +6,34 @@ import img4 from '../../assets/carsouselimg4.jpg'
 import img5 from '../../assets/carsouselimg5.jpg'
 
 const IMAGES = [img1, img2, img3, img4, img5]
+const LOOP_IMAGES = [...IMAGES, ...IMAGES]
+const SPEED = 0.6 // px per frame
 
 export default function LifestyleCarousel() {
+  const trackRef = useRef(null)
+  const pausedRef = useRef(false)
   const [email, setEmail] = useState('')
   const [subscribed, setSubscribed] = useState(false)
+
+  useEffect(() => {
+    const el = trackRef.current
+    if (!el) return
+    let frame
+
+    function step() {
+      if (!pausedRef.current) {
+        el.scrollLeft += SPEED
+        const loopPoint = el.scrollWidth / 2
+        if (el.scrollLeft >= loopPoint) {
+          el.scrollLeft -= loopPoint
+        }
+      }
+      frame = requestAnimationFrame(step)
+    }
+
+    frame = requestAnimationFrame(step)
+    return () => cancelAnimationFrame(frame)
+  }, [])
 
   function handleSubscribe(e) {
     e.preventDefault()
@@ -20,10 +44,17 @@ export default function LifestyleCarousel() {
 
   return (
     <section className="py-16">
-      <div className="no-scrollbar flex snap-x gap-4 overflow-x-auto scroll-smooth px-4 sm:px-6 lg:px-8">
-        {IMAGES.map((img) => (
-          <div key={img} className="aspect-[4/5] w-[70%] flex-none snap-start overflow-hidden bg-neutral-100 sm:w-[calc(20%-13px)]">
-            <img src={img} alt="" loading="lazy" className="h-full w-full object-cover" />
+      <div
+        ref={trackRef}
+        onMouseEnter={() => (pausedRef.current = true)}
+        onMouseLeave={() => (pausedRef.current = false)}
+        onTouchStart={() => (pausedRef.current = true)}
+        onTouchEnd={() => (pausedRef.current = false)}
+        className="no-scrollbar flex gap-4 overflow-x-auto px-4 sm:px-6 lg:px-8"
+      >
+        {LOOP_IMAGES.map((img, i) => (
+          <div key={i} className="aspect-[4/5] w-[70%] flex-none overflow-hidden bg-neutral-100 sm:w-[calc(20%-13px)]">
+            <img src={img} alt="" loading="lazy" draggable={false} className="h-full w-full object-cover" />
           </div>
         ))}
       </div>

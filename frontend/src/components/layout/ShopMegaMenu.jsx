@@ -37,11 +37,17 @@ export default function ShopMegaMenu({ open, onClose }) {
     <div className="fixed inset-0 z-50 flex flex-col bg-neutral-50">
       <div className="flex items-center justify-between gap-4 border-b border-neutral-200 px-4 py-4 sm:px-6 lg:px-8">
         <Link to="/" onClick={onClose} className="text-lg font-bold tracking-[0.2em]">
-          ATELIER
+          Unboxstore
         </Link>
 
         <nav className="hidden items-center gap-7 lg:flex">
           <span className="text-xs font-bold uppercase tracking-wide underline underline-offset-4">Shop</span>
+          <Link to="/shop?gender=women" onClick={onClose} className="text-xs font-bold uppercase tracking-wide hover:text-neutral-500">
+            Women
+          </Link>
+          <Link to="/shop?gender=men" onClick={onClose} className="text-xs font-bold uppercase tracking-wide hover:text-neutral-500">
+            Men
+          </Link>
           <Link
             to="/shop?sort=newest"
             onClick={onClose}
@@ -66,6 +72,22 @@ export default function ShopMegaMenu({ open, onClose }) {
       <div className="flex-1 overflow-y-auto px-4 py-10 sm:px-6 lg:px-8">
         <div className="mx-auto grid max-w-[1600px] grid-cols-2 gap-x-8 gap-y-12 sm:grid-cols-3 lg:grid-cols-[280px_repeat(3,1fr)]">
           <div className="col-span-2 flex flex-col gap-3 sm:col-span-3 lg:col-span-1">
+            <div className="mb-2 flex gap-4">
+              <Link
+                to="/shop?gender=women"
+                onClick={onClose}
+                className="text-xs font-bold uppercase tracking-wide text-neutral-500 hover:text-neutral-900"
+              >
+                Women
+              </Link>
+              <Link
+                to="/shop?gender=men"
+                onClick={onClose}
+                className="text-xs font-bold uppercase tracking-wide text-neutral-500 hover:text-neutral-900"
+              >
+                Men
+              </Link>
+            </div>
             <Link to="/shop" onClick={onClose} className="text-3xl font-bold leading-tight hover:text-neutral-600 sm:text-4xl">
               Shop all
             </Link>

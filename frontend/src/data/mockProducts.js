@@ -115,6 +115,13 @@ function rotate(arr, offset) {
   return [...arr.slice(shift), ...arr.slice(0, shift)]
 }
 
+// Roughly even Men/Women split with a slice of Unisex pieces (shown in both).
+function pickGender(r) {
+  if (r < 0.45) return 'men'
+  if (r < 0.9) return 'women'
+  return 'unisex'
+}
+
 function buildProducts() {
   const products = []
   CATEGORIES.forEach((category) => {
@@ -156,6 +163,7 @@ function buildProducts() {
         isNewArrival: rand() > 0.8,
         rating,
         reviewCount,
+        gender: pickGender(rand()),
       })
     })
   })

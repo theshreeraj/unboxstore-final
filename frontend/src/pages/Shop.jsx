@@ -31,6 +31,7 @@ export default function Shop() {
   )
   const priceBucket = searchParams.has('price') ? Number(searchParams.get('price')) : null
   const inStockOnly = searchParams.get('inStock') === '1'
+  const gender = searchParams.get('gender') || 'all'
   const sort = searchParams.get('sort') || 'featured'
 
   const updateParams = useCallback(
@@ -71,8 +72,15 @@ export default function Shop() {
     updateParams({ inStock: inStockOnly ? null : '1' })
   }
 
+  function setGender(next) {
+    updateParams({ gender: next === 'all' ? null : next })
+  }
+
   function clearFilters() {
-    setSearchParams(new URLSearchParams(sort !== 'featured' ? { sort } : {}))
+    const kept = {}
+    if (sort !== 'featured') kept.sort = sort
+    if (gender !== 'all') kept.gender = gender
+    setSearchParams(new URLSearchParams(kept))
     setVisibleCount(PAGE_SIZE)
   }
 
@@ -83,6 +91,7 @@ export default function Shop() {
       categories,
       sizes,
       inStockOnly,
+      gender,
       sort,
       minPrice: bucket?.min,
       maxPrice: bucket?.max,
@@ -90,29 +99,57 @@ export default function Shop() {
       setAllResults(res)
       setLoading(false)
     })
-  }, [categories, sizes, priceBucket, inStockOnly, sort])
+  }, [categories, sizes, priceBucket, inStockOnly, gender, sort])
 
   const visibleProducts = allResults.slice(0, visibleCount)
   const activeCategory = categories.length === 1 ? getCategoryBySlug(categories[0]) : null
+  const genderLabel = gender === 'women' ? 'Women' : gender === 'men' ? 'Men' : null
 
   const filterProps = {
-    filters: { categories, sizes, priceBucket, inStockOnly },
+    filters: { categories, sizes, priceBucket, inStockOnly, gender },
     onToggleCategory: toggleCategory,
     onToggleSize: toggleSize,
     onSetPriceBucket: setPriceBucket,
     onToggleInStock: toggleInStock,
+    onSetGender: setGender,
     onClear: clearFilters,
   }
+
+  const heading = activeCategory
+    ? `${genderLabel ? `${genderLabel} ` : ''}${activeCategory.name}`
+    : genderLabel
+      ? `Shop ${genderLabel}`
+      : 'Shop All'
 
   return (
     <div className="mx-auto max-w-[1600px] px-4 pb-24 pt-10 sm:px-6 lg:px-8">
       <div className="max-w-2xl">
-        <h1 className="text-3xl font-bold sm:text-4xl">{activeCategory ? activeCategory.name : 'Shop All'}</h1>
+        <h1 className="text-3xl font-bold sm:text-4xl">{heading}</h1>
         <p className="mt-3 text-sm text-neutral-600 sm:text-base">
           {activeCategory
             ? `Explore our ${activeCategory.name.toLowerCase()} — considered pieces made to last.`
             : 'Explore the full collection. Considered essentials, made to last.'}
         </p>
+      </div>
+
+      <div className="mt-5 flex gap-2">
+        {[
+          { value: 'all', label: 'All' },
+          { value: 'women', label: 'Women' },
+          { value: 'men', label: 'Men' },
+        ].map((tab) => (
+          <button
+            key={tab.value}
+            onClick={() => setGender(tab.value)}
+            className={`rounded-full px-4 py-2 text-sm font-semibold transition-colors ${
+              gender === tab.value
+                ? 'bg-neutral-900 text-white'
+                : 'bg-neutral-100 text-neutral-600 hover:bg-neutral-200'
+            }`}
+          >
+            {tab.label}
+          </button>
+        ))}
       </div>
 
       <div className="mt-6 flex gap-2 overflow-x-auto pb-1">

@@ -9,6 +9,8 @@ import Home from './pages/Home'
 import Shop from './pages/Shop'
 import Product from './pages/Product'
 import Cart from './pages/Cart'
+import About from './pages/About'
+import Contact from './pages/Contact'
 
 function App() {
   return (
@@ -22,6 +24,8 @@ function App() {
             <Route path="/shop" element={<Shop />} />
             <Route path="/product/:slug" element={<Product />} />
             <Route path="/cart" element={<Cart />} />
+            <Route path="/about" element={<About />} />
+            <Route path="/contact" element={<Contact />} />
             <Route path="*" element={<Navigate to="/" replace />} />
           </Routes>
           <Footer />

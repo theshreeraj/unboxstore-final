@@ -30,12 +30,12 @@ export default function CategoryGrid() {
           View all
         </Link>
       </div>
-      <div className="grid grid-cols-2 gap-4 sm:auto-rows-[180px] sm:grid-cols-4">
+      <div className="grid grid-cols-2 sm:auto-rows-[180px] sm:grid-cols-4">
         {featured.map((cat, i) => (
           <Link
             key={cat.slug}
             to={`/shop?category=${cat.slug}`}
-            className={`group relative overflow-hidden rounded-lg bg-neutral-100 ${SPANS[i] || ''} aspect-[3/4] sm:aspect-auto`}
+            className={`group relative overflow-hidden bg-neutral-100 ${SPANS[i] || ''} aspect-[3/4] sm:aspect-auto`}
           >
             <img
               src={imageFor(cat.slug)}

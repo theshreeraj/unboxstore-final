@@ -5,7 +5,7 @@ import blazerImage from '../../assets/10054.jpg'
 export default function EditorialBanner() {
   return (
     <section className="mx-auto max-w-7xl px-4 py-4 sm:px-6 lg:px-8">
-      <div className="grid grid-cols-1 gap-4 lg:grid-cols-12">
+      <div className="grid grid-cols-1 lg:grid-cols-12">
         <ImagePanel
           image={trenchImage}
           eyebrow="Seasonal Edit"
@@ -15,7 +15,7 @@ export default function EditorialBanner() {
           className="lg:col-span-7 aspect-[4/5] sm:aspect-[16/10] lg:aspect-auto"
         />
 
-        <div className="flex flex-col gap-4 lg:col-span-5">
+        <div className="flex flex-col lg:col-span-5">
           <ImagePanel
             image={blazerImage}
             eyebrow="Tailoring"
@@ -27,7 +27,7 @@ export default function EditorialBanner() {
 
           <Link
             to="/shop?sort=newest"
-            className="group flex flex-1 flex-col justify-center rounded-lg bg-neutral-900 px-8 py-10 text-white sm:px-10"
+            className="group flex flex-1 flex-col justify-center bg-neutral-900 px-8 py-10 text-white sm:px-10"
           >
             <p className="text-xs font-semibold uppercase tracking-[0.25em] text-white/60">Just In</p>
             <h3 className="mt-3 text-2xl font-semibold sm:text-3xl">New Arrivals, weekly.</h3>
@@ -43,7 +43,7 @@ export default function EditorialBanner() {
 
 function ImagePanel({ image, eyebrow, title, cta, to, className = '' }) {
   return (
-    <Link to={to} className={`group relative block overflow-hidden rounded-lg ${className}`}>
+    <Link to={to} className={`group relative block overflow-hidden ${className}`}>
       <img
         src={image}
         alt={title}

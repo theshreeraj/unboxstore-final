@@ -8,12 +8,27 @@ export const PRICE_BUCKETS = [
   { label: '₹250 and above', min: 250, max: Infinity },
 ]
 
-export default function Filters({ filters, onToggleCategory, onSetPriceBucket, onToggleSize, onToggleInStock, onClear }) {
+const GENDERS = [
+  { value: 'all', label: 'All' },
+  { value: 'women', label: 'Women' },
+  { value: 'men', label: 'Men' },
+]
+
+export default function Filters({
+  filters,
+  onToggleCategory,
+  onSetPriceBucket,
+  onToggleSize,
+  onToggleInStock,
+  onSetGender,
+  onClear,
+}) {
   const hasActiveFilters =
     filters.categories.length > 0 ||
     filters.sizes.length > 0 ||
     filters.priceBucket !== null ||
-    filters.inStockOnly
+    filters.inStockOnly ||
+    (filters.gender && filters.gender !== 'all')
 
   return (
     <div className="space-y-8">
@@ -21,6 +36,27 @@ export default function Filters({ filters, onToggleCategory, onSetPriceBucket, o
         <button onClick={onClear} className="text-xs font-medium underline underline-offset-4">
           Clear all filters
         </button>
+      )}
+
+      {onSetGender && (
+        <div>
+          <h3 className="mb-3 text-sm font-semibold">Gender</h3>
+          <div className="flex gap-2">
+            {GENDERS.map((g) => (
+              <button
+                key={g.value}
+                onClick={() => onSetGender(g.value)}
+                className={`rounded-full border px-4 py-1.5 text-xs font-medium transition-colors ${
+                  (filters.gender || 'all') === g.value
+                    ? 'border-neutral-900 bg-neutral-900 text-white'
+                    : 'border-neutral-300 text-neutral-700 hover:border-neutral-900'
+                }`}
+              >
+                {g.label}
+              </button>
+            ))}
+          </div>
+        </div>
       )}
 
       <div>

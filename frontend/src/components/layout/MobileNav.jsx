@@ -6,11 +6,23 @@ export default function MobileNav({ open, onClose }) {
   return (
     <Drawer open={open} onClose={onClose} side="left" title="Menu" widthClass="max-w-xs">
       <nav className="flex flex-col px-2 py-2">
+        <Link to="/shop?gender=women" onClick={onClose} className="px-3 py-3 text-sm font-medium">
+          Women
+        </Link>
+        <Link to="/shop?gender=men" onClick={onClose} className="px-3 py-3 text-sm font-medium">
+          Men
+        </Link>
         <Link to="/shop?sort=newest" onClick={onClose} className="px-3 py-3 text-sm font-medium">
           New Arrivals
         </Link>
         <Link to="/shop" onClick={onClose} className="px-3 py-3 text-sm font-medium">
           Shop All
+        </Link>
+        <Link to="/about" onClick={onClose} className="px-3 py-3 text-sm font-medium">
+          About
+        </Link>
+        <Link to="/contact" onClick={onClose} className="px-3 py-3 text-sm font-medium">
+          Contact
         </Link>
         <p className="px-3 pt-4 pb-1 text-xs font-semibold uppercase tracking-wide text-neutral-400">
           Categories

@@ -37,8 +37,8 @@ export default function Navbar() {
             >
               <Menu size={20} />
             </button>
-            <Link to="/" className="text-lg font-bold tracking-[0.2em]">
-              ATELIER
+            <Link to="/" className="text-lg font-bold">
+              Unboxstore
             </Link>
           </div>
 
@@ -51,6 +51,18 @@ export default function Navbar() {
             >
               Shop
             </button>
+            <Link
+              to="/shop?gender=women"
+              className="rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-white"
+            >
+              Women
+            </Link>
+            <Link
+              to="/shop?gender=men"
+              className="rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-white"
+            >
+              Men
+            </Link>
             <Link
               to="/shop?sort=newest"
               className="rounded-full px-4 py-2 text-xs font-bold uppercase tracking-wide hover:bg-white"

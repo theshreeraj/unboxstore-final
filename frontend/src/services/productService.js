@@ -39,13 +39,16 @@ export function getRelatedProducts(product, limit = 4) {
   return delay(related)
 }
 
-export function searchProducts(query) {
+export function searchProducts(query, gender) {
   const q = query.trim().toLowerCase()
   if (!q) return delay([])
-  const results = MOCK_PRODUCTS.filter(
+  let results = MOCK_PRODUCTS.filter(
     (p) => p.name.toLowerCase().includes(q) || p.category.includes(q)
-  ).slice(0, 8)
-  return delay(results)
+  )
+  if (gender && gender !== 'all') {
+    results = results.filter((p) => p.gender === gender || p.gender === 'unisex')
+  }
+  return delay(results.slice(0, 8))
 }
 
 /**
@@ -59,10 +62,14 @@ export function getFilteredProducts({
   maxPrice,
   sizes = [],
   inStockOnly = false,
+  gender,
   sort = 'featured',
 } = {}) {
   let results = [...MOCK_PRODUCTS]
 
+  if (gender && gender !== 'all') {
+    results = results.filter((p) => p.gender === gender || p.gender === 'unisex')
+  }
   if (categories.length) {
     results = results.filter((p) => categories.includes(p.category))
   }
