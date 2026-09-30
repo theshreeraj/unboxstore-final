@@ -6,6 +6,7 @@ import StatusBadge from '../components/common/StatusBadge'
 import ErrorState from '../components/common/ErrorState'
 import { useApi } from '../hooks/useApi'
 import { listOrders } from '../services/orders'
+import { FaPencilAlt } from "react-icons/fa";
 
 const STATUS_TABS = ['All', 'Processing', 'Shipped', 'Delivered', 'Cancelled']
 
@@ -38,6 +39,7 @@ export default function Orders() {
       {error && <ErrorState message={`Failed to load orders — ${error}`} onRetry={refetch} />}
 
       <Card padded={false}>
+        <div style={{border:"1px solid red"}}>fdsfdsdsdssddsfdf</div>
         <div className="overflow-x-auto">
           <table className="w-full text-left text-sm">
             <thead>
@@ -49,6 +51,7 @@ export default function Orders() {
                 <th className="px-6 py-3 font-medium">Total</th>
                 <th className="px-6 py-3 font-medium">Payment</th>
                 <th className="px-6 py-3 font-medium">Status</th>
+                <th className="px-6 py-3 font-medium">Action</th>
               </tr>
             </thead>
             <tbody>
@@ -85,6 +88,12 @@ export default function Orders() {
                     <td className="px-6 py-3.5">
                       <StatusBadge status={o.status} />
                     </td>
+
+                    <td>
+                      <FaPencilAlt />
+                    </td>
+
+                    
                   </tr>
                 ))}
             </tbody>
